@@ -23,7 +23,7 @@ const MyQuestion = () => {
 
 
     const fetchAllQuestion = async (tType: string | null, signal: any) => {
-        const response = await fetch(`/api?page=${pageQuery}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_MY_URL}/api?page=${pageQuery}`, {
             method: "GET",
             headers: {
                 "content-type": "application/json",
