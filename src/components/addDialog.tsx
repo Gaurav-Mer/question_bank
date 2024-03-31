@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react'
 import Button from './button';
 import Image from 'next/image';
 import Loading from './loading';
+import Link from 'next/link';
 
 const AddDialog = ({ children, open, onClose, onSuccess, title, isLoading }: { children: ReactNode, open: boolean, onClose: () => void; onSuccess: () => void; title: string; isLoading?: boolean }) => {
     if (!open) {
@@ -27,7 +28,8 @@ const AddDialog = ({ children, open, onClose, onSuccess, title, isLoading }: { c
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-gray-50 px-2 py-3 flex justify-start sm:justify-end sm:px-6">
+                        <div className="bg-gray-50 px-2 py-3 flex justify-between flex-col-reverse  sm:flex-row sm:justify-between sm:px-6">
+                            <Link href={"/bulkAdd"} className='mt-5 ml-2 sm:mt-0 sm:ml-0 text-orange-500 '>Bulk Add</Link>
                             <div className='flex gap-2'>
                                 <Button className='w-40' type='danger' title={"cancel"} onClick={onClose}></Button>
                                 {isLoading ? <Loading className="ml-2" /> :
