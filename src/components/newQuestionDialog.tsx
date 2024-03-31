@@ -25,7 +25,7 @@ const NewQuestionDialog = ({ openDialog, setQuestions, handleClose, editData }: 
 
     const sendDataToDb = async () => {
         if (editData && Object.keys(editData)?.length > 0) {
-            const resp = await fetch(`${process.env.NEXT_PUBLIC_MY_URL}/api`, {
+            const resp = await fetch(`/api`, {
                 method: "PATCH", headers: {
                     "content-type": "application/json"
                 },
@@ -46,7 +46,7 @@ const NewQuestionDialog = ({ openDialog, setQuestions, handleClose, editData }: 
                 setError({ question: "something went wrong!" })
             }
         } else {
-            const resp = await fetch(`${process.env.NEXT_PUBLIC_MY_URL}/api`, {
+            const resp = await fetch(`/api`, {
                 method: "POST", headers: {
                     "content-type": "application/json"
                 },
