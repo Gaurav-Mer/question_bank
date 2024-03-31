@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Loading from './loading';
 import Link from 'next/link';
 
-const AddDialog = ({ children, open, onClose, onSuccess, title, isLoading }: { children: ReactNode, open: boolean, onClose: () => void; onSuccess: () => void; title: string; isLoading?: boolean }) => {
+const AddDialog = ({ children, open, onClose, onSuccess, title, isLoading, isEdit }: { children: ReactNode, open: boolean, onClose: () => void; onSuccess: () => void; title: string; isLoading?: boolean, isEdit?: boolean }) => {
     if (!open) {
         return null;
     }
@@ -33,7 +33,7 @@ const AddDialog = ({ children, open, onClose, onSuccess, title, isLoading }: { c
                             <div className='flex gap-2'>
                                 <Button className='w-40' type='danger' title={"cancel"} onClick={onClose}></Button>
                                 {isLoading ? <Loading className="ml-2" /> :
-                                    <Button className='w-40 bg-orange-500 text-white :hover:bg-red-600' type='de' title={"Add Question"} onClick={onSuccess} />
+                                    <Button className='w-40 bg-orange-500 text-white :hover:bg-red-600' type='de' title={isEdit ? "Edit Question" : "Add Question"} onClick={onSuccess} />
                                 }
                             </div>
                         </div>

@@ -2,6 +2,7 @@
 import Button from '@/components/button'
 import Loading from '@/components/loading';
 import Navbar from '@/components/navbar'
+import { redirect, useRouter } from 'next/navigation';
 import React, { ChangeEvent, useState } from 'react';
 
 interface QuestionAndAnswer {
@@ -9,11 +10,11 @@ interface QuestionAndAnswer {
   answer?: string; // Optional since answers might not be immediately following questions
 }
 
-
 const BulkAdd = () => {
   const [data, setData] = useState("");
   const [myArrayList, setMyArrayList] = useState<QuestionAndAnswer[] | []>([]);
   const [loader, setLoader] = useState(false)
+  const { push } = useRouter();
 
   function extractQuestionsAndAnswers(data: any) {
     const filteredArr = data.split("Question:").filter((str: string) => str.includes("Answer:"));
@@ -55,8 +56,8 @@ const BulkAdd = () => {
           },
           body: JSON.stringify(data)
         });
-        // Handle response if needed
       }));
+      push("/")
     } catch (error) {
       // Handle error if needed
     } finally {
@@ -72,7 +73,15 @@ const BulkAdd = () => {
         <p className='text-center mt-3 font-bold text-xl'>Add Data In Bulk</p>
         <p className='text-center text-orange-500'>make sure question should start with Question: while answer should start with Answer:</p>
         <textarea value={data} onChange={(e) => setData(e.target.value)} rows={10} name="answer" id="answer" className="mt-5 block w-full rounded-md border-0 py-2 px-2  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:purple-blue-600 focus:border-none sm:text-sm sm:leading-6 " placeholder="Enter your Input to convert " />
-        <Button onClick={handleSubmit} className='w-40 mt-5 md:float-end' type='danger' title={"Convert"} ></Button>
+        <div className='flex justify-between gap-4 md:gap-0'>
+          {myArrayList?.length > 0 ?
+            <div className='w-full flex  justify-end'>
+              {loader ? <Loading className='mt-5 w-full' /> :
+                <button className='mt-5 bg-orange-500 text-white p-2 w-full rounded-lg ' onClick={sendDataToDB}>SUBMIT</button>}
+            </div> : <div></div>
+          }
+          <Button onClick={handleSubmit} className='w-40 mt-5 md:float-end' type='danger' title={"Convert"} ></Button>
+        </div>
         <p className='mt-10 text-orange-500 font-bold text-lg'>Genreated Data is : -</p>
         <div>
           {myArrayList?.map((item: any, index: number) => {
@@ -88,12 +97,7 @@ const BulkAdd = () => {
             </>)
           })}
         </div>
-        {myArrayList?.length > 0 &&
-          <div className='w-full flex  justify-end'>
-            {loader ? <Loading /> :
-              <button className='mt-5 bg-orange-500 text-white p-2 w-full rounded-lg ' onClick={sendDataToDB}>SUBMIT</button>}
-          </div>
-        }
+
       </div>
     </main>
   )

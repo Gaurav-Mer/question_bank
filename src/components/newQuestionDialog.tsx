@@ -79,7 +79,7 @@ const NewQuestionDialog = ({ openDialog, setQuestions, handleClose, editData }: 
 
     return (
         <div>
-            <AddDialog isLoading={loading} title='Add new Question ' onSuccess={handleSuccess} open={openDialog} onClose={handleClose}>
+            <AddDialog isEdit={editData && Object.keys(editData)?.length > 0 ? true : false} isLoading={loading} title='Add new Question ' onSuccess={handleSuccess} open={openDialog} onClose={handleClose}>
                 <label htmlFor="title" className="block mt-3 text-sm font-medium leading-6 text-gray-900">What is your Question Title ?</label>
                 <input value={newData.question} onChange={(e) => setNewData(prev => ({ ...prev, [e.target.name]: e.target.value }))} type="text" name="question" id="question" className="mt-2 block w-full rounded-md border-0 py-2 pl-7  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 focus:border-none sm:text-sm sm:leading-6 " placeholder="Enter title for Question" />
                 {Object.keys(error)?.length > 0 && error?.hasOwnProperty("question") ?
